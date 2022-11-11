@@ -1,3 +1,8 @@
+bool isHourMinutesEqual(byte hr, byte min){
+  if (int(hr) == 0 && int(min) == 0) return true;
+  else return false;
+}
+
 void setCurrentTime(){
   
   if(!stringComplete) return;
@@ -37,8 +42,8 @@ void processAlarm(customAlarm &alarmData){
   // Alarm is not deleted or invalid
   if (alarmData.alarmID == -1) return;
 
-  Datetime currentDatetime = rtc.now();
-  TimeSpan timeDelta = ccurrentDatetime - alarmData.rtcTime;
+  DateTime currentDatetime = rtc.now();
+  TimeSpan timeDelta = currentDatetime - alarmData.rtcTime;
   bool HourMinuteMatched = isHourMinutesEqual(timeDelta.hours(), timeDelta.minutes());
 
   Serial.print("Total hours diff ");
@@ -55,7 +60,7 @@ void processAlarm(customAlarm &alarmData){
     }
 
     if (!alarmData.hasTriggered || alarmData.willRepeat){
-      Serial.print("Switching ")
+      Serial.print("Switching ");
       if (alarmData.alarmMode == 0){  // Stay LOW
         digitalWrite(alarmData.outPin, LOW);
         Serial.print("Off");
@@ -104,9 +109,4 @@ void getAllAlarms(){
 
 void deleteAlarm(){
   // Remove the registered alarm
-}
-
-bool isHourMinutesEqual(byte hr, byte min){
-  if (int(hr) == 0 && int(min) == 0) return true;
-  else: return false;
 }
